@@ -44,7 +44,6 @@ public class UserServiceDao {
     public UserEntity getUserByJwt() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
-        String login = userDetails.getUsername();
-        return findByLogin(login);
+        return findByLogin(userDetails.getUsername());
     }
 }

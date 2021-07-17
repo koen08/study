@@ -16,15 +16,6 @@ public class ExamDto {
     private String title;
     @NotBlank(message = "Поле description не может быть пустым")
     private String description;
-
-    private int timeWatch;
-
-    private ZonedDateTime dateStart;
-
-    private ZonedDateTime dateStop;
-
-    @NotBlank(message = "Поле statusType не может быть пустым")
-    private String statusType;
-    @NotBlank(message = "Поле coursesEntity не может быть пустым")
-    private String coursesEntity;
+    private int stopwatch;
+    private boolean isActive;
 }

@@ -5,4 +5,5 @@
     http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.0.xsd">
     <include file="initial-schrema-import.xml" relativeToChangelogFile="true"/>
     <include file="2021-01-12-insert-data-admin.xml" relativeToChangelogFile="true"/>
+    <include file="2021-02-01-initial-schrema-import-exam.xml" relativeToChangelogFile="true"/>
 </databaseChangeLog>

@@ -10,5 +10,5 @@ import lombok.NoArgsConstructor;
 public class ExamPageDto {
     private String title;
     private String description;
-    private float generalScore;
+    private int stopwatch;
 }
