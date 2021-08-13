@@ -27,4 +27,14 @@ public class GlobalAccess {
         ExamEntity examEntity = examServiceDao.getExamId(examId);
         return true;
     }
+    public boolean accessToExamPageSettings(@NonNull final UserDetails userDetails, @NonNull final Long examId){
+        UserEntity userEntity = userServiceDao.findByLogin(userDetails.getUsername());
+        ExamEntity examEntity = examServiceDao.getExamId(examId);
+        for (ExamEntity exam : userEntity.getExamEntities()){
+            if (exam.equals(examEntity)){
+                return true;
+            }
+        }
+        return false;
+    }
 }

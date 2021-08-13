@@ -37,7 +37,7 @@ public class ExamServiceImpl implements ExamService {
     public ExamPageDto getExamPage(Long id) {
         ExamEntity examEntity = examServiceDao.getExamId(id);
         return new ExamPageDto(examEntity.getTitle(),
-                examEntity.getDescription(), examEntity.getStopwatch());
+                examEntity.getDescription(), examEntity.getStopwatch(), examEntity.isActive());
     }
 
     @Override

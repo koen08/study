@@ -19,19 +19,21 @@ public class ExamController {
     ExamService examService;
 
     @PostMapping("/create")
-    public ResponseEntity<GenericResponse<?>> createExam (@Valid @RequestBody ExamDto examDto)
+    public ResponseEntity<GenericResponse<?>> createExam(@Valid @RequestBody ExamDto examDto)
             throws AccessException {
         return new ResponseEntity<>(new GenericResponse<>(
                 examService.createExam(examDto)), HttpStatus.OK);
     }
-    @PreAuthorize("hasRole('USER') and @access.accessExam(principal, #examId)")
+
+    @PreAuthorize("hasRole('USER') and @access.accessToExamPageSettings(principal, #examId)")
     @GetMapping("/page/{examId}")
-    public ResponseEntity<GenericResponse<?>> getExam (@PathVariable Long examId) {
+    public ResponseEntity<GenericResponse<?>> getExamPage(@PathVariable Long examId) {
         return new ResponseEntity<>(new GenericResponse<>(
                 examService.getExamPage(examId)), HttpStatus.OK);
     }
+
     @GetMapping("/my")
-    public ResponseEntity<GenericResponse<?>> getListExamUser () {
+    public ResponseEntity<GenericResponse<?>> getListExamUser() {
         return new ResponseEntity<>(new GenericResponse<>(
                 examService.getListExamUser()), HttpStatus.OK);
     }

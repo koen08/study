@@ -3,6 +3,8 @@ package com.koen.study.dao.entity;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @Entity
@@ -23,4 +25,6 @@ public class ExamEntity {
     @ManyToOne
     @JoinColumn(name = "auth_user_id")
     private UserEntity userEntity;
+    @OneToMany(mappedBy = "examEntity", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<QuestionEntity> questionEntitiesList = new ArrayList<>();
 }

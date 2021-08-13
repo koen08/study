@@ -14,6 +14,6 @@ public class QuestionAnswerDto {
     private String question;
     private String questionType;
     private Long examId;
-    private float questionScore;
-    private List<AnswerDto> answers;
+    private String[] answers;
+    private String[] answersCorrect;
 }
