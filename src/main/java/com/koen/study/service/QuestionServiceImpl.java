@@ -4,12 +4,11 @@ import com.koen.study.dao.ExamServiceDao;
 import com.koen.study.dao.QuestionServiceDao;
 import com.koen.study.dao.entity.QuestionEntity;
 import com.koen.study.dao.entity.QuestionType;
-import com.koen.study.web.dto.AnswerResponse;
 import com.koen.study.web.dto.QuestionAnswerDto;
-import com.koen.study.web.dto.QuestionWithDataDto;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class QuestionServiceImpl implements QuestionService {
@@ -35,12 +34,32 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     @Override
-    public List<QuestionWithDataDto> getQuestionListByExam(Long examId) {
-        return null;
+    public List<QuestionAnswerDto> getQuestionListByExam(Long examId) {
+        List<QuestionEntity> questionEntities = questionServiceDao.getQuestionListByExam(examId);
+        return questionEntities.stream().map(QuestionServiceImpl::questionEntityToQuestionAnswerDto).collect(Collectors.toList());
+    }
+
+    public static QuestionAnswerDto questionEntityToQuestionAnswerDto(QuestionEntity questionEntity) {
+        return new QuestionAnswerDto(
+                questionEntity.getId(),
+                questionEntity.getQuestion(),
+                questionEntity.getQuestionType().toString(),
+                questionEntity.getExamEntity().getId(),
+                questionEntity.getAnswers(),
+                questionEntity.getCorrectAnswers()
+        );
     }
 
     @Override
     public QuestionAnswerDto getPageQuestion(Long questionId) {
-        return null;
+        QuestionEntity questionEntity = questionServiceDao.getQuestion(questionId);
+        return new QuestionAnswerDto(
+                questionEntity.getId(),
+                questionEntity.getQuestion(),
+                questionEntity.getQuestionType().toString(),
+                questionEntity.getExamEntity().getId(),
+                questionEntity.getAnswers(),
+                questionEntity.getCorrectAnswers()
+        );
     }
 }
