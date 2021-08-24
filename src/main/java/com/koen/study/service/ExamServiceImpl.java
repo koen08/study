@@ -5,6 +5,7 @@ import com.koen.study.dao.UserServiceDao;
 import com.koen.study.dao.entity.ExamEntity;
 import com.koen.study.web.dto.ExamDto;
 import com.koen.study.web.dto.ExamPageDto;
+import com.koen.study.web.exception.CommonException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -34,11 +35,19 @@ public class ExamServiceImpl implements ExamService {
     }
 
     @Override
-    public ExamPageDto getExamPage(Long id) {
+    public ExamPageDto getExamPage(Long id) throws CommonException {
         ExamEntity examEntity = examServiceDao.getExamId(id);
         return new ExamPageDto(examEntity.getTitle(),
                 examEntity.getDescription(), examEntity.getStopwatch(), examEntity.isActive());
     }
+
+    @Override
+    public ExamPageDto getExamPageForPlayer(Long id) throws CommonException {
+        ExamPageDto examPage = getExamPage(id);
+        examPage.setIsActive(null);
+        return examPage;
+    }
+
 
     @Override
     public List<ExamDto> getListExamUser() {

@@ -3,7 +3,7 @@ package com.koen.study.controller;
 import com.koen.study.service.QuestionService;
 import com.koen.study.web.dto.GenericResponse;
 import com.koen.study.web.dto.QuestionAnswerDto;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.koen.study.web.exception.CommonException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,13 +19,13 @@ public class QuestionController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<GenericResponse<?>> createExam(@RequestBody QuestionAnswerDto questionAnswerDto) {
+    public ResponseEntity<GenericResponse<?>> createExam(@RequestBody QuestionAnswerDto questionAnswerDto) throws CommonException {
         return new ResponseEntity<>(new GenericResponse<>(
                 questionService.createQuestion(questionAnswerDto)), HttpStatus.OK);
     }
 
     @GetMapping("/list/{examId}")
-    public ResponseEntity<GenericResponse<?>> getListQuestion(@PathVariable Long examId) {
+    public ResponseEntity<GenericResponse<?>> getListQuestion(@PathVariable Long examId) throws CommonException {
         return new ResponseEntity<>(new GenericResponse<>(
                 questionService.getQuestionListByExam(examId)), HttpStatus.OK);
     }

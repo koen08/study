@@ -19,7 +19,6 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 import java.util.List;
 
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
-import static org.springframework.http.HttpStatus.UNAUTHORIZED;
 
 @ControllerAdvice
 @Slf4j
@@ -47,6 +46,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(CommonException.class)
     protected ResponseEntity<GenericResponse<?>> handleAuthException(CommonException e) {
         GenericResponse<?> genericResponse = new GenericResponse<>(e.getMessage());
-        return new ResponseEntity<>(genericResponse, UNAUTHORIZED);
+        e.printStackTrace();
+        return new ResponseEntity<>(genericResponse, BAD_REQUEST);
     }
 }

@@ -11,5 +11,5 @@ public class ExamPageDto {
     private String title;
     private String description;
     private int stopwatch;
-    private boolean isActive;
+    private Boolean isActive;
 }

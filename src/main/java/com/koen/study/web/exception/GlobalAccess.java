@@ -9,29 +9,30 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
-
 @Component("access")
 public class GlobalAccess {
     @Autowired
     ExamServiceDao examServiceDao;
     @Autowired
     UserServiceDao userServiceDao;
+
     public boolean accessMyExam(@NonNull final UserDetails userDetails) throws AccessException {
         UserEntity userEntity = userServiceDao.findByLogin(userDetails.getUsername());
         return true;
     }
+
     public boolean accessTryExam(@NonNull final UserDetails userDetails,
-                                 @NonNull final Long examId) throws ExamException, MySelfException {
+                                 @NonNull final Long examId) throws ExamException, MySelfException, CommonException {
         UserEntity userEntity = userServiceDao.findByLogin(userDetails.getUsername());
         ExamEntity examEntity = examServiceDao.getExamId(examId);
         return true;
     }
-    public boolean accessToExamPageSettings(@NonNull final UserDetails userDetails, @NonNull final Long examId){
+
+    public boolean accessToExamPageSettings(@NonNull final UserDetails userDetails, @NonNull final Long examId) throws CommonException {
         UserEntity userEntity = userServiceDao.findByLogin(userDetails.getUsername());
         ExamEntity examEntity = examServiceDao.getExamId(examId);
-        for (ExamEntity exam : userEntity.getExamEntities()){
-            if (exam.equals(examEntity)){
+        for (ExamEntity exam : userEntity.getExamEntities()) {
+            if (exam.equals(examEntity)) {
                 return true;
             }
         }

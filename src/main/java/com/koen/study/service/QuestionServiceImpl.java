@@ -5,6 +5,7 @@ import com.koen.study.dao.QuestionServiceDao;
 import com.koen.study.dao.entity.QuestionEntity;
 import com.koen.study.dao.entity.QuestionType;
 import com.koen.study.web.dto.QuestionAnswerDto;
+import com.koen.study.web.exception.CommonException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,7 +22,7 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     @Override
-    public QuestionAnswerDto createQuestion(QuestionAnswerDto questionAnswerDto) {
+    public QuestionAnswerDto createQuestion(QuestionAnswerDto questionAnswerDto) throws CommonException {
         QuestionEntity questionEntity = new QuestionEntity();
         questionEntity.setQuestion(questionAnswerDto.getQuestion());
         questionEntity.setQuestionType(QuestionType.valueOf(questionAnswerDto.getQuestionType()));
@@ -34,7 +35,7 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     @Override
-    public List<QuestionAnswerDto> getQuestionListByExam(Long examId) {
+    public List<QuestionAnswerDto> getQuestionListByExam(Long examId) throws CommonException {
         List<QuestionEntity> questionEntities = questionServiceDao.getQuestionListByExam(examId);
         return questionEntities.stream().map(QuestionServiceImpl::questionEntityToQuestionAnswerDto).collect(Collectors.toList());
     }

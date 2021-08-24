@@ -4,6 +4,7 @@ import com.koen.study.service.ExamService;
 import com.koen.study.web.dto.ExamDto;
 import com.koen.study.web.dto.GenericResponse;
 import com.koen.study.web.exception.AccessException;
+import com.koen.study.web.exception.CommonException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,9 +28,15 @@ public class ExamController {
 
     @PreAuthorize("hasRole('USER') and @access.accessToExamPageSettings(principal, #examId)")
     @GetMapping("/page/{examId}")
-    public ResponseEntity<GenericResponse<?>> getExamPage(@PathVariable Long examId) {
+    public ResponseEntity<GenericResponse<?>> getExamPageForCreator(@PathVariable Long examId) throws CommonException {
         return new ResponseEntity<>(new GenericResponse<>(
                 examService.getExamPage(examId)), HttpStatus.OK);
+    }
+
+    @GetMapping("/search/{examId}")
+    public ResponseEntity<GenericResponse<?>> getPageExamForPlayer(@PathVariable Long examId) throws CommonException {
+        return new ResponseEntity<>(new GenericResponse<>(
+                examService.getExamPageForPlayer(examId)), HttpStatus.OK);
     }
 
     @GetMapping("/my")

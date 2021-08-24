@@ -4,11 +4,12 @@ import com.koen.study.dao.entity.ExamEntity;
 import com.koen.study.dao.entity.UserEntity;
 import com.koen.study.dao.repo.ExamEntityRepository;
 import com.koen.study.dao.repo.UserEntityRepository;
-import com.koen.study.web.dto.ExamDto;
+import com.koen.study.web.exception.CommonException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ExamServiceDao {
@@ -21,8 +22,12 @@ public class ExamServiceDao {
         return examEntityRepository.save(examEntity);
     }
 
-    public ExamEntity getExamId(Long examId) {
-        return examEntityRepository.findById(examId).get();
+    public ExamEntity getExamId(Long examId) throws CommonException {
+        Optional<ExamEntity> examEntity = examEntityRepository.findById(examId);
+        if (examEntity.isEmpty()) {
+            throw new CommonException("Exam " + examId + " not found");
+        }
+        return examEntity.get();
     }
 
     public List<ExamEntity> getAllByUserEntity(UserEntity userEntity) {
