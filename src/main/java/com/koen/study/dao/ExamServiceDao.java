@@ -25,7 +25,7 @@ public class ExamServiceDao {
     public ExamEntity getExamId(Long examId) throws CommonException {
         Optional<ExamEntity> examEntity = examEntityRepository.findById(examId);
         if (examEntity.isEmpty()) {
-            throw new CommonException("Exam " + examId + " not found");
+            throw new CommonException("Exam " + examId + " not found", 5);
         }
         return examEntity.get();
     }

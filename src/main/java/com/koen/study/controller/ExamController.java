@@ -39,6 +39,12 @@ public class ExamController {
                 examService.getExamPageForPlayer(examId)), HttpStatus.OK);
     }
 
+    @GetMapping("/play/{examId}")
+    public ResponseEntity<GenericResponse<?>> getPlayExam(@PathVariable Long examId) throws CommonException {
+        return new ResponseEntity<>(new GenericResponse<>(
+                examService.getPlayExam(examId)), HttpStatus.OK);
+    }
+
     @GetMapping("/my")
     public ResponseEntity<GenericResponse<?>> getListExamUser() {
         return new ResponseEntity<>(new GenericResponse<>(

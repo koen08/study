@@ -6,7 +6,6 @@ import com.koen.study.security.jwt.JwtProvider;
 import com.koen.study.web.dto.AnswerResponse;
 import com.koen.study.web.dto.AuthDto;
 import com.koen.study.web.dto.Token;
-import com.koen.study.web.exception.AuthorizationException;
 import com.koen.study.web.exception.CommonException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -34,8 +33,8 @@ public class AuthorizationServiceImpl implements AuthorizationService {
         String login = loginAndPasswordMap.get("login");
         String password = loginAndPasswordMap.get("password");
         UserEntity userEntity = userServiceDao.findByLogin(login);
-        if (userEntity == null) throw new CommonException("Пользователь с таким Email не существует");
-        else if (!checkPasswordUser(password, userEntity)) throw new CommonException("Неверный логин или пароль");
+        if (userEntity == null) throw new CommonException("Пользователь с таким Email не существует", 1);
+        else if (!checkPasswordUser(password, userEntity)) throw new CommonException("Неверный логин или пароль", 2);
         return new Token(jwtProvider.generateToken(userEntity.getLogin()), null);
     }
 
@@ -43,10 +42,10 @@ public class AuthorizationServiceImpl implements AuthorizationService {
         if (authorization.startsWith("Basic")) {
             authorization = authorization.substring(6);
             if (authorization.isBlank()) {
-                throw new CommonException("Пустые данные авторизации");
+                throw new CommonException("Пустые данные авторизации", 3);
             }
         } else {
-            throw new CommonException("Пустые данные авторизации");
+            throw new CommonException("Пустые данные авторизации", 3);
         }
         return authorization;
     }
@@ -77,7 +76,7 @@ public class AuthorizationServiceImpl implements AuthorizationService {
     public AnswerResponse createPerson(AuthDto authDto) throws CommonException {
         if (userServiceDao.findByLogin(authDto.getLogin()) == null) {
             userServiceDao.saveUser(authDto);
-        } else throw new CommonException("Пользователь с данной электронной почтой существует");
+        } else throw new CommonException("Пользователь с данной электронной почтой существует", 4);
         return new AnswerResponse("Регистрация прошла успешно");
     }
 }

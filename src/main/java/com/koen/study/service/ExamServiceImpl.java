@@ -3,11 +3,15 @@ package com.koen.study.service;
 import com.koen.study.dao.ExamServiceDao;
 import com.koen.study.dao.UserServiceDao;
 import com.koen.study.dao.entity.ExamEntity;
+import com.koen.study.dao.entity.QuestionEntity;
 import com.koen.study.web.dto.ExamDto;
 import com.koen.study.web.dto.ExamPageDto;
+import com.koen.study.web.dto.ExamPlayResponseDto;
+import com.koen.study.web.dto.QuestionAnswerDto;
 import com.koen.study.web.exception.CommonException;
 import org.springframework.stereotype.Service;
 
+import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -46,6 +50,29 @@ public class ExamServiceImpl implements ExamService {
         ExamPageDto examPage = getExamPage(id);
         examPage.setIsActive(null);
         return examPage;
+    }
+
+    @Override
+    public ExamPlayResponseDto getPlayExam(Long id) throws CommonException {
+        ExamEntity examEntity = examServiceDao.getExamId(id);
+        List<QuestionEntity> questionEntityList = examEntity.getQuestionEntitiesList();
+        List<QuestionAnswerDto> questionAnswerDtoList = new LinkedList<>();
+        ExamPlayResponseDto examPlayResponseDto = new ExamPlayResponseDto();
+        examPlayResponseDto.setId(id);
+        for (QuestionEntity question : questionEntityList) {
+            QuestionAnswerDto questionAnswerDto = new QuestionAnswerDto(
+                    question.getId(),
+                    question.getQuestion(),
+                    question.getQuestionType().toString(),
+                    null,
+                    question.getAnswers(),
+                    null
+
+            );
+            questionAnswerDtoList.add(questionAnswerDto);
+        }
+        examPlayResponseDto.setQuestionAnswerDto(questionAnswerDtoList);
+        return examPlayResponseDto;
     }
 
 

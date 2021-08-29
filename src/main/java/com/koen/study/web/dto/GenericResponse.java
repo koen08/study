@@ -8,14 +8,17 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class GenericResponse<T> {
+    private long errorId;
     private String errorMessage;
     T responseData;
 
     public GenericResponse(T responseData) {
+        errorId = 0;
         this.responseData = responseData;
     }
 
-    public GenericResponse(String errorMessage) {
+    public GenericResponse(long errorId, String errorMessage) {
         this.errorMessage = errorMessage;
+        this.errorId = errorId;
     }
 }
