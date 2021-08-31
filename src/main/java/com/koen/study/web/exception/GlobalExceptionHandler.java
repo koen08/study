@@ -1,5 +1,6 @@
 package com.koen.study.web.exception;
 
+import com.koen.study.web.dto.ErrorDto;
 import com.koen.study.web.dto.GenericResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,9 +45,9 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ResponseStatus(BAD_REQUEST)
     @ExceptionHandler(CommonException.class)
-    protected ResponseEntity<GenericResponse<?>> handleAuthException(CommonException e) {
-        GenericResponse<?> genericResponse = new GenericResponse<>(e.getErrorId(), e.getMessage());
+    protected ResponseEntity<ErrorDto> handleAuthException(CommonException e) {
+        ErrorDto errorDto = new ErrorDto(e.getErrorId(), e.getMessage());
         e.printStackTrace();
-        return new ResponseEntity<>(genericResponse, BAD_REQUEST);
+        return new ResponseEntity<>(errorDto, BAD_REQUEST);
     }
 }
