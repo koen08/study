@@ -41,7 +41,7 @@ public class AuthorizationServiceImpl implements AuthorizationService {
     private String cutAuthCode(String authorization) throws CommonException {
         if (authorization.startsWith("Basic")) {
             authorization = authorization.substring(6);
-            if (authorization.isBlank()) {
+            if (authorization.isEmpty()) {
                 throw new CommonException("Пустые данные авторизации", 3);
             }
         } else {

@@ -12,7 +12,6 @@ import javax.validation.constraints.Size;
 @AllArgsConstructor
 @NoArgsConstructor
 public class AuthDto {
-
     @NotBlank(message = "Поле login не может быть пустым")
     @Email(message = "Некорректно введен адрес электронной почты")
     private String login;
@@ -21,6 +20,4 @@ public class AuthDto {
     private String password;
     @NotBlank(message = "Поле nick_name не может быть пустым")
     private String nick_name;
-    @NotBlank(message = "Поле role не может быть пустым")
-    private String role;
 }

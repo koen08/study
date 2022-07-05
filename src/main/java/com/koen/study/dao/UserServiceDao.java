@@ -27,7 +27,7 @@ public class UserServiceDao {
 
     public UserEntity saveUser(AuthDto authDto) {
         UserEntity userEntity = new UserEntity();
-        RoleEntity userRole = roleEntityRepository.findByName("ROLE_" + authDto.getRole());
+        RoleEntity userRole = roleEntityRepository.findByName("ROLE_USER");
         userEntity.setRoleEntity(userRole);
         userEntity.setLogin(authDto.getLogin());
         userEntity.setPassword(authDto.getPassword());
